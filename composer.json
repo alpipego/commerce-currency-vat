@@ -1,0 +1,16 @@
+{
+    "name": "alpipego/commerce-currency-vat",
+    "description": "Locates the current website visitor and gets converted currency and VAT if applicable",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "alpipego",
+            "email": "alpipego@gmail.com"
+        }
+    ],
+    "require": {
+        "wp-hibou/di": "^0.2",
+        "netresearch/jsonmapper": "^1.3"
+    }
+}
