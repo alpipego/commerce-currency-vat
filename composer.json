@@ -1,7 +1,7 @@
 {
-    "name": "alpipego/edd-currency",
-    "description": "Locates the current website visitor and shows converted currency and VAT if applicable",
-    "type": "wordpress-plugin",
+    "name": "alpipego/commerce-currency-vat",
+    "description": "Locates the current website visitor and gets converted currency and VAT if applicable",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "wp-hibou/di": "dev-develop",
+        "wp-hibou/di": "^0.2",
         "netresearch/jsonmapper": "^1.3"
     }
 }
