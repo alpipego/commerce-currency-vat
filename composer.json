@@ -1,0 +1,16 @@
+{
+    "name": "alpipego/edd-currency",
+    "description": "Locates the current website visitor and shows converted currency and VAT if applicable",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "alpipego",
+            "email": "alpipego@gmail.com"
+        }
+    ],
+    "require": {
+        "wp-hibou/di": "dev-develop",
+        "netresearch/jsonmapper": "^1.3"
+    }
+}
