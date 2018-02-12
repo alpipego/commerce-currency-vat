@@ -68,9 +68,7 @@ class VisitorCurrency implements VisitorCurrencyInterface
             return $this->currency;
         }
 
-        $country = $this->country->getCountry();
-
-        $currencies = $country->currencies;
+        $currencies = $this->country->getCountryCurrencies();
         /** @var Currency $currency */
         $currency = $currencies[0];
         if (count($currencies) > 1) {

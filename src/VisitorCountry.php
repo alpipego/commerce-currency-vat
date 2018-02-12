@@ -34,7 +34,7 @@ class VisitorCountry implements VisitorCountryInterface
         }
     }
 
-    public function getCountry(string $code = null): Country
+    private function getCountry(string $code = null): Country
     {
         $url = str_replace('{$country}', $code ?? $this->location->locate(), self::COUNTRY_API);
 
@@ -49,5 +49,10 @@ class VisitorCountry implements VisitorCountryInterface
     public function getCountryCode(): string
     {
         return $this->getCountry()->alpha2code;
+    }
+
+    public function getCountryCurrencies(): array
+    {
+        return $this->getCountry()->currencies;
     }
 }

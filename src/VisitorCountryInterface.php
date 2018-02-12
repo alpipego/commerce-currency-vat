@@ -8,15 +8,13 @@
 
 namespace Alpipego\Commerce;
 
-use Alpipego\Commerce\Models\Country;
-
 interface VisitorCountryInterface
 {
-    public function getCountry(string $code = null): Country;
-
     public function setCountry(string $code);
 
     public function getCountryName(): string;
 
     public function getCountryCode(): string;
+
+    public function getCountryCurrencies() : array;
 }
