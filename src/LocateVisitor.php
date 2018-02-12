@@ -44,10 +44,7 @@ class LocateVisitor implements LocateVisitorInterface
         });
 
         while (count($this->services) && empty($country)) {
-            try {
-                $country = $this->makeRequest(array_shift($this->services));
-            } catch (\Requests_Exception $e) {
-            }
+            $country = $this->makeRequest(array_shift($this->services));
         }
         $country = empty($country) ? $this->defaultCountry : $country;
         $this->setCookie($country);
