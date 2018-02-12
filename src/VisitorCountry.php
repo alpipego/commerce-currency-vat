@@ -40,4 +40,14 @@ class VisitorCountry implements VisitorCountryInterface
 
         return $this->request->get($url, 'country', 3600 * 24 * 30);
     }
+
+    public function getCountryName(): string
+    {
+        return $this->getCountry()->name;
+    }
+
+    public function getCountryCode(): string
+    {
+        return $this->getCountry()->alpha2code;
+    }
 }

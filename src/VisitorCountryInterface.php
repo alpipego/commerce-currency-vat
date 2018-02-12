@@ -15,4 +15,8 @@ interface VisitorCountryInterface
     public function getCountry(string $code = null): Country;
 
     public function setCountry(string $code);
+
+    public function getCountryName(): string;
+
+    public function getCountryCode(): string;
 }
