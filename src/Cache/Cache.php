@@ -23,7 +23,7 @@ final class Cache implements CacheInterface
 
     public function makeKey(string $source): string
     {
-        return sanitize_file_name(md5($source));
+        return sanitize_key(md5($source));
     }
 
     public function set(string $key, string $value, string $type, int $expire = 60 * 60 * 24): bool
