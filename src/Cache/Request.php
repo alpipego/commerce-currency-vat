@@ -43,7 +43,7 @@ final class Request implements RequestInterface
         string $returnModel,
         int $expire = 3600 * 24
     ) {
-        $cacheKey = $this->cache->makeKey($url . implode(';', $data));
+        $cacheKey = $this->cache->makeKey($url . implode(';', $this->flattenCacheKey($data)));
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
         }
@@ -62,5 +62,12 @@ final class Request implements RequestInterface
         }
 
         return $response;
+    }
+
+    private function flattenCacheKey(array $data): array
+    {
+        return array_walk_recursive($data, function ($v, $k) {
+            $data[$k] = $v;
+        });
     }
 }
