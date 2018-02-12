@@ -32,11 +32,12 @@ class VatNumber implements VatNumberInterface
 
     public function verify(string $vatNumber): bool
     {
-        $data = $this->parse($vatNumber);
-        if ($data['valid']) {
+        try {
+            $data   = $this->parse($vatNumber);
             $result = $this->request($data['vat_number'], $data['country_code']);
 
             return $result->valid;
+        } catch (VatNumberException $e) {
         }
 
         return false;
@@ -52,7 +53,7 @@ class VatNumber implements VatNumberInterface
             throw new VatNumberException('Invalid VAT Number');
         }
 
-        return ['vat_number' => $vatNumber, 'country_code' => $alpha2code, 'valid' => true];
+        return ['vat_number' => $vatNumber, 'country_code' => $alpha2code];
     }
 
     private function request(string $vatNumber, string $alpha2code): Models\VatNumber
