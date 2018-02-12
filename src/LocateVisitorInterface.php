@@ -12,14 +12,6 @@ interface LocateVisitorInterface
 {
     /**
      * Get visitors country code (ISO 3166-1 alpha-2)
-     * requests external API every time
-     *
-     * @return string
-     */
-    public function getCountryCode(): string;
-
-    /**
-     * Get visitors country code (ISO 3166-1 alpha-2)
      * uses cache/cookie
      *
      * @return null|string

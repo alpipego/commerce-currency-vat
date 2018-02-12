@@ -34,7 +34,7 @@ class LocateVisitor implements LocateVisitorInterface
         return $this->country ?? $_COOKIE[self::COOKIE_NAME] ?? $this->getCountryCode();
     }
 
-    public function getCountryCode(): string
+    private function getCountryCode(): string
     {
         $ip      = $this->getIpAddress();
         $country = null;
