@@ -45,8 +45,13 @@ class VatNumber implements VatNumberInterface
 
     private function parse(string $vatNumber): array
     {
-        $alpha2code = $this->location->locate();
+        $vatNumber  = strtoupper($vatNumber);
+        $alpha2code = strtoupper($this->location->locate());
         $vatNumber  = str_replace($alpha2code, '', $vatNumber);
+        // greece can use either GR or EL as country code (ISO is GR, EU uses EL)
+        if (in_array($alpha2code, ['GR', 'EL'], true)) {
+            $vatNumber = preg_replace('/^GR|EL/', '', $vatNumber);
+        }
         preg_replace('/\h/', '', $vatNumber);
         $regex = sprintf('/^%s$/', self::REGEXEN[$alpha2code]);
         if (! preg_match($regex, $vatNumber)) {
