@@ -35,27 +35,20 @@ final class Vat implements VatInterface
     {
 //        add_action('wp_footer', function () {
 //            echo '<code><pre>';
-//            var_dump($this->getRatesByCountry());
+//            var_dump($this->getRates());
 //            echo '</pre></code>';
 //        });
     }
 
-    private function getRatesByCountry(): array
+    private function getRates() : array
     {
-        if (!empty($this->rates)) {
-            return $this->rates;
-        }
-        /** @var VatCountry $country */
-        foreach ($this->getRates()->rates as $country) {
-            if (in_array($this->country, [$country->country_code, $country->code], true)) {
-                return $this->rates = array_merge($this->fallbackRates, $country->getEffectiveRates());
-            }
-        }
+        $overrides = apply_filters('ccv/vat/overrides', []);
+        $overrides = is_array($overrides) ? $overrides : [];
 
-        return $this->fallbackRates;
+        return array_merge($this->getAPIRates()->rates, $overrides);
     }
 
-    private function getRates(): VatRates
+    private function getAPIRates(): VatRates
     {
         return $this->request->get(self::VAT_API, 'vatRates', 3600 * 24 * 30);
     }
@@ -63,6 +56,21 @@ final class Vat implements VatInterface
     public function getStandardRate(): float
     {
         return $this->getRatesByCountry()['standard'];
+    }
+
+    private function getRatesByCountry(): array
+    {
+        if (! empty($this->rates)) {
+            return $this->rates;
+        }
+        /** @var VatCountry $country */
+        foreach ($this->getRates() as $country) {
+            if (in_array($this->country, [$country->country_code, $country->code], true)) {
+                return $this->rates = array_merge($this->fallbackRates, $country->getEffectiveRates());
+            }
+        }
+
+        return $this->fallbackRates;
     }
 
     public function getReducedRate(): ?float
