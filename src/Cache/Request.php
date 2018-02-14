@@ -24,13 +24,8 @@ final class Request implements RequestInterface
             return $this->cache->get($cacheKey);
         }
 
-        try {
-            $res = \Requests::get($url);
-            $this->cache->set($cacheKey, $res->body, $returnModel, $expire);
-
-            return $this->cache->get($cacheKey);
-        } catch (\Requests_Exception $e) {
-        }
+        $res = \Requests::get($url);
+        $this->cache->set($cacheKey, $res->body, $returnModel, $expire);
 
         return $this->cache->get($cacheKey);
     }
