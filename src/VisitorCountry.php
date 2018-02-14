@@ -28,7 +28,7 @@ class VisitorCountry implements VisitorCountryInterface
         if ($this->location->locate() !== $code) {
             $country = $this->getCountry($code);
             if (is_null($country->alpha2code)) {
-                throw new InvalidAlphaException('Please provide a valid ISO 3166-1 alpha-2 or ISO 3166-1 alpha-3 country code');
+                throw new InvalidAlphaException();
             }
             $this->location->setCountry($country->alpha2code);
         }
