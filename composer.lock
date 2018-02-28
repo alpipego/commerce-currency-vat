@@ -4,71 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e9c8a312bdb87064d2618e71d8f7529",
+    "content-hash": "9bf840c7d43d943931fec126808ea581",
     "packages": [
         {
-            "name": "commerceguys/intl",
-            "version": "v0.7.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/commerceguys/intl.git",
-                "reference": "edfcfc26ed8505c4f6fcf862eb36dfda1af74b00"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/commerceguys/intl/zipball/edfcfc26ed8505c4f6fcf862eb36dfda1af74b00",
-                "reference": "edfcfc26ed8505c4f6fcf862eb36dfda1af74b00",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mikey179/vfsstream": "1.*",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "CommerceGuys\\Intl\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bojan Zivanovic"
-                }
-            ],
-            "description": "Internationalization library powered by CLDR data.",
-            "time": "2016-12-13T12:33:19+00:00"
-        },
-        {
             "name": "netresearch/jsonmapper",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cweiske/jsonmapper.git",
-                "reference": "b94ffe5b237a697253f06f5a57d9b22292bfffb3"
+                "reference": "3868fe1128ce1169228acdb623359dca74db5ef3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/b94ffe5b237a697253f06f5a57d9b22292bfffb3",
-                "reference": "b94ffe5b237a697253f06f5a57d9b22292bfffb3",
+                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/3868fe1128ce1169228acdb623359dca74db5ef3",
+                "reference": "3868fe1128ce1169228acdb623359dca74db5ef3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.2.*",
+                "phpunit/phpunit": "~4.8.35 || ~5.7 || ~6.4",
                 "squizlabs/php_codesniffer": "~1.5"
             },
             "type": "library",
@@ -90,20 +46,20 @@
                 }
             ],
             "description": "Map nested JSON structures onto PHP classes",
-            "time": "2017-08-14T07:26:24+00:00"
+            "time": "2017-11-28T21:30:01+00:00"
         },
         {
             "name": "pimple/pimple",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Pimple.git",
-                "reference": "4d45fb62d96418396ec58ba76e6f065bca16e10a"
+                "reference": "9e403941ef9d65d20cba7d54e29fe906db42cf32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/4d45fb62d96418396ec58ba76e6f065bca16e10a",
-                "reference": "4d45fb62d96418396ec58ba76e6f065bca16e10a",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/9e403941ef9d65d20cba7d54e29fe906db42cf32",
+                "reference": "9e403941ef9d65d20cba7d54e29fe906db42cf32",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +96,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2017-07-23T07:32:15+00:00"
+            "time": "2018-01-21T07:42:36+00:00"
         },
         {
             "name": "psr/container",
@@ -193,16 +149,16 @@
         },
         {
             "name": "wp-hibou/di",
-            "version": "dev-develop",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-hibou/DI.git",
-                "reference": "00f8c46709feb4e9c6b12d54ac10d7d9bba51d68"
+                "reference": "2d7ca3d847e13ad65471841ec0c36225c7cfcc70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-hibou/DI/zipball/00f8c46709feb4e9c6b12d54ac10d7d9bba51d68",
-                "reference": "00f8c46709feb4e9c6b12d54ac10d7d9bba51d68",
+                "url": "https://api.github.com/repos/wp-hibou/DI/zipball/2d7ca3d847e13ad65471841ec0c36225c7cfcc70",
+                "reference": "2d7ca3d847e13ad65471841ec0c36225c7cfcc70",
                 "shasum": ""
             },
             "require": {
@@ -230,15 +186,13 @@
                 }
             ],
             "description": "Pimple based autowired dependency injection",
-            "time": "2017-08-14 17:44:39"
+            "time": "2017-08-14T17:44:28+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "wp-hibou/di": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
