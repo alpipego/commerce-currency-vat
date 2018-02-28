@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "wp-hibou/di": "^0.2",
+        "wp-hibou/di": "dev-feature/cache",
         "netresearch/jsonmapper": "^1.3"
     }
 }
