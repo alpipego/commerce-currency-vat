@@ -10,11 +10,11 @@ namespace Alpipego\Commerce;
 
 interface VatInterface
 {
-    public function getStandardRate(): float;
+    public function getStandardRate(string $isoCode = ''): float;
 
-    public function getReducedRate(): ?float;
+    public function getReducedRate(string $isoCode = ''): ?float;
 
-    public function getSuperReducedRate(): ?float;
+    public function getSuperReducedRate(string $isoCode = ''): ?float;
 
-    public function getReducedRateAlt(): ?float;
+    public function getReducedRateAlt(string $isoCode = ''): ?float;
 }
