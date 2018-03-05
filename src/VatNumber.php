@@ -52,10 +52,15 @@ class VatNumber implements VatNumberInterface
         if (in_array($alpha2code, ['GR', 'EL'], true)) {
             $vatNumber = preg_replace('/^GR|EL/', '', $vatNumber);
         }
+
+        if (! array_key_exists($alpha2code, self::REGEXEN)) {
+            throw new VatNumberException(sprintf('%s is not a VAT enabled country', $alpha2code));
+        }
+
         preg_replace('/\h/', '', $vatNumber);
         $regex = sprintf('/^%s$/', self::REGEXEN[$alpha2code]);
         if (! preg_match($regex, $vatNumber)) {
-            throw new VatNumberException('Invalid VAT Number');
+            throw new VatNumberException(sprintf('%s is not a valid VAT ID number for %s', $vatNumber, $alpha2code));
         }
 
         return ['vat_number' => $vatNumber, 'country_code' => $alpha2code];
