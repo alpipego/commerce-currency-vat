@@ -10,6 +10,7 @@ namespace Alpipego\Commerce;
 
 use Alpipego\Commerce\Cache\RequestInterface;
 use Alpipego\Commerce\Models\Country;
+use Alpipego\Commerce\Exception\InvalidAlphaException;
 
 class VisitorCountry implements VisitorCountryInterface
 {

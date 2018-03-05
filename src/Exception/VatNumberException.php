@@ -6,7 +6,7 @@
  * Time: 12:10
  */
 
-namespace Alpipego\Commerce;
+namespace Alpipego\Commerce\Exception;
 
 class VatNumberException extends \Exception
 {

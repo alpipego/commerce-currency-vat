@@ -6,7 +6,7 @@
  * Time: 10:13
  */
 
-namespace Alpipego\Commerce;
+namespace Alpipego\Commerce\Exception;
 
 class InvalidAlphaException extends \Exception
 {

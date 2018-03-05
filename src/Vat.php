@@ -34,15 +34,6 @@ final class Vat implements VatInterface
         $this->country  = $location->locate();
     }
 
-    public function run()
-    {
-//        add_action('wp_footer', function () {
-//            echo '<code><pre>';
-//            var_dump($this->getRates());
-//            echo '</pre></code>';
-//        });
-    }
-
     public function getStandardRate(string $isoCode = ''): float
     {
         return $this->getRatesByCountry($isoCode)['standard'];
