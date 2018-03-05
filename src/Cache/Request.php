@@ -61,10 +61,11 @@ final class Request implements RequestInterface
 
     private function flattenCacheKey(array $data): array
     {
-        array_walk_recursive($data, function ($v, $k) {
-            $data[$k] = $v;
+        $return = [];
+        array_walk_recursive($data, function ($v, $k) use (&$return) {
+            $return[$k] = $v;
         });
 
-        return $data;
+        return $return;
     }
 }
