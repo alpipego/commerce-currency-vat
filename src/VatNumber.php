@@ -5,6 +5,7 @@
  * Date: 04.10.2017
  * Time: 10:47
  */
+declare(strict_types=1);
 
 namespace Alpipego\Commerce;
 
@@ -30,10 +31,10 @@ class VatNumber implements VatNumberInterface
         $this->request  = $request;
     }
 
-    public function verify(string $vatNumber): bool
+    public function verify(string $vatNumber, string $country = ''): bool
     {
         try {
-            $data   = $this->parse($vatNumber);
+            $data   = $this->parse($vatNumber, (! empty($country) ? $country : $this->location->locate()));
             $result = $this->request($data['vat_number'], $data['country_code']);
 
             return $result->valid;
@@ -43,10 +44,10 @@ class VatNumber implements VatNumberInterface
         return false;
     }
 
-    private function parse(string $vatNumber): array
+    private function parse(string $vatNumber, string $country = ''): array
     {
         $vatNumber  = strtoupper($vatNumber);
-        $alpha2code = strtoupper($this->location->locate());
+        $alpha2code = strtoupper($country);
         $vatNumber  = str_replace($alpha2code, '', $vatNumber);
         // greece can use either GR or EL as country code (ISO is GR, EU uses EL)
         if (in_array($alpha2code, ['GR', 'EL'], true)) {

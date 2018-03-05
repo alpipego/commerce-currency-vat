@@ -41,5 +41,5 @@ interface VatNumberInterface
         'SK' => '[0-9]{1',
     ];
 
-    public function verify(string $vatNumber): bool;
+    public function verify(string $vatNumber, string $country = ''): bool;
 }
