@@ -5,6 +5,7 @@
  * Date: 30.09.2017
  * Time: 12:11
  */
+declare(strict_types=1);
 
 namespace Alpipego\Commerce\Cache;
 

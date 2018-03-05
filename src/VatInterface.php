@@ -5,6 +5,7 @@
  * Date: 01.10.2017
  * Time: 08:57
  */
+declare(strict_types=1);
 
 namespace Alpipego\Commerce;
 
