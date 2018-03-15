@@ -5,6 +5,7 @@
  * Date: 04.10.2017
  * Time: 10:47
  */
+declare(strict_types=1);
 
 namespace Alpipego\Commerce;
 
@@ -41,5 +42,5 @@ interface VatNumberInterface
         'SK' => '[0-9]{1',
     ];
 
-    public function verify(string $vatNumber): bool;
+    public function verify(string $vatNumber, string $country = ''): bool;
 }

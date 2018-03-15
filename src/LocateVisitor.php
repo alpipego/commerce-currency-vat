@@ -5,6 +5,7 @@
  * Date: 30.09.2017
  * Time: 09:26
  */
+declare(strict_types=1);
 
 namespace Alpipego\Commerce;
 
@@ -34,7 +35,7 @@ class LocateVisitor implements LocateVisitorInterface
         return $this->country ?? $_COOKIE[self::COOKIE_NAME] ?? $this->getCountryCode();
     }
 
-    public function getCountryCode(): string
+    private function getCountryCode(): string
     {
         $ip      = $this->getIpAddress();
         $country = null;
@@ -44,10 +45,7 @@ class LocateVisitor implements LocateVisitorInterface
         });
 
         while (count($this->services) && empty($country)) {
-            try {
-                $country = $this->makeRequest(array_shift($this->services));
-            } catch (\Requests_Exception $e) {
-            }
+            $country = $this->makeRequest(array_shift($this->services));
         }
         $country = empty($country) ? $this->defaultCountry : $country;
         $this->setCookie($country);
@@ -86,8 +84,10 @@ class LocateVisitor implements LocateVisitorInterface
 
     private function setCookie(string $country)
     {
-        $hostArr = explode(':', $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME']);
-        setcookie(self::COOKIE_NAME, $country, 0, '/', $hostArr[0], true);
+        if ($host = ($_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? null)) {
+            $hostArr = explode(':', $host);
+            setcookie(self::COOKIE_NAME, $country, 0, '/', $hostArr[0], true);
+        }
     }
 
     public function setCountry(string $code)

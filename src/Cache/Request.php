@@ -5,6 +5,7 @@
  * Date: 01.10.2017
  * Time: 10:35
  */
+declare(strict_types=1);
 
 namespace Alpipego\Commerce\Cache;
 
@@ -24,13 +25,8 @@ final class Request implements RequestInterface
             return $this->cache->get($cacheKey);
         }
 
-        try {
-            $res = \Requests::get($url);
-            $this->cache->set($cacheKey, $res->body, $returnModel, $expire);
-
-            return $this->cache->get($cacheKey);
-        } catch (\Requests_Exception $e) {
-        }
+        $res = \Requests::get($url);
+        $this->cache->set($cacheKey, $res->body, $returnModel, $expire);
 
         return $this->cache->get($cacheKey);
     }
@@ -43,7 +39,7 @@ final class Request implements RequestInterface
         string $returnModel,
         int $expire = 3600 * 24
     ) {
-        $cacheKey = $this->cache->makeKey($url . implode(';', $data));
+        $cacheKey = $this->cache->makeKey($url . implode(';', $this->flattenCacheKey($data)));
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
         }
@@ -62,5 +58,15 @@ final class Request implements RequestInterface
         }
 
         return $response;
+    }
+
+    private function flattenCacheKey(array $data): array
+    {
+        $return = [];
+        array_walk_recursive($data, function ($v, $k) use (&$return) {
+            $return[$k] = $v;
+        });
+
+        return $return;
     }
 }

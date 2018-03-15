@@ -5,10 +5,12 @@
  * Date: 04.10.2017
  * Time: 10:47
  */
+declare(strict_types=1);
 
 namespace Alpipego\Commerce;
 
 use Alpipego\Commerce\Cache\RequestInterface;
+use Alpipego\Commerce\Exception\VatNumberException;
 
 class VatNumber implements VatNumberInterface
 {
@@ -30,29 +32,40 @@ class VatNumber implements VatNumberInterface
         $this->request  = $request;
     }
 
-    public function verify(string $vatNumber): bool
+    public function verify(string $vatNumber, string $country = ''): bool
     {
-        $data = $this->parse($vatNumber);
-        if ($data['valid']) {
+        try {
+            $data   = $this->parse($vatNumber, (! empty($country) ? $country : $this->location->locate()));
             $result = $this->request($data['vat_number'], $data['country_code']);
 
             return $result->valid;
+        } catch (VatNumberException $e) {
         }
 
         return false;
     }
 
-    private function parse(string $vatNumber): array
+    private function parse(string $vatNumber, string $country = ''): array
     {
-        $alpha2code = $this->location->locate();
+        $vatNumber  = strtoupper($vatNumber);
+        $alpha2code = strtoupper($country);
         $vatNumber  = str_replace($alpha2code, '', $vatNumber);
+        // greece can use either GR or EL as country code (ISO is GR, EU uses EL)
+        if (in_array($alpha2code, ['GR', 'EL'], true)) {
+            $vatNumber = preg_replace('/^GR|EL/', '', $vatNumber);
+        }
+
+        if (! array_key_exists($alpha2code, self::REGEXEN)) {
+            throw new VatNumberException(sprintf('%s is not a VAT enabled country', $alpha2code));
+        }
+
         preg_replace('/\h/', '', $vatNumber);
         $regex = sprintf('/^%s$/', self::REGEXEN[$alpha2code]);
         if (! preg_match($regex, $vatNumber)) {
-            throw new VatNumberException('Invalid VAT Number');
+            throw new VatNumberException(sprintf('%s is not a valid VAT ID number for %s', $vatNumber, $alpha2code));
         }
 
-        return ['vat_number' => $vatNumber, 'country_code' => $alpha2code, 'valid' => true];
+        return ['vat_number' => $vatNumber, 'country_code' => $alpha2code];
     }
 
     private function request(string $vatNumber, string $alpha2code): Models\VatNumber

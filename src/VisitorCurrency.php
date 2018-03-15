@@ -5,6 +5,7 @@
  * Date: 30.09.2017
  * Time: 11:23
  */
+declare(strict_types=1);
 
 namespace Alpipego\Commerce;
 
@@ -68,9 +69,7 @@ class VisitorCurrency implements VisitorCurrencyInterface
             return $this->currency;
         }
 
-        $country = $this->country->getCountry();
-
-        $currencies = $country->currencies;
+        $currencies = $this->country->getCountryCurrencies();
         /** @var Currency $currency */
         $currency = $currencies[0];
         if (count($currencies) > 1) {

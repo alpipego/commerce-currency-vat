@@ -5,19 +5,12 @@
  * Date: 30.09.2017
  * Time: 09:26
  */
+declare(strict_types=1);
 
 namespace Alpipego\Commerce;
 
 interface LocateVisitorInterface
 {
-    /**
-     * Get visitors country code (ISO 3166-1 alpha-2)
-     * requests external API every time
-     *
-     * @return string
-     */
-    public function getCountryCode(): string;
-
     /**
      * Get visitors country code (ISO 3166-1 alpha-2)
      * uses cache/cookie

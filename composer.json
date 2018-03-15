@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "wp-hibou/di": "^0.2",
-        "netresearch/jsonmapper": "^1.3"
+        "netresearch/jsonmapper": "^1.3",
+        "php": "^7.1"
     }
 }
