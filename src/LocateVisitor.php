@@ -84,8 +84,10 @@ class LocateVisitor implements LocateVisitorInterface
 
     private function setCookie(string $country)
     {
-        $hostArr = explode(':', $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME']);
-        setcookie(self::COOKIE_NAME, $country, 0, '/', $hostArr[0], true);
+        if ($host = ($_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? null)) {
+            $hostArr = explode(':', $host);
+            setcookie(self::COOKIE_NAME, $country, 0, '/', $hostArr[0], true);
+        }
     }
 
     public function setCountry(string $code)
