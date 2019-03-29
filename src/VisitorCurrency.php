@@ -15,7 +15,7 @@ use Alpipego\Commerce\Models\ExchangeRates;
 
 class VisitorCurrency implements VisitorCurrencyInterface
 {
-    const EXCHANGE_RATE = 'https://api.fixer.io/latest';
+    const EXCHANGE_RATE = 'https://api.exchangeratesapi.io/latest';
     const CURRENCIES_API = 'https://gist.githubusercontent.com/Fluidbyte/2973986/raw/Common-Currency.json';
     private $country;
     private $defaultCurrency;
@@ -46,7 +46,7 @@ class VisitorCurrency implements VisitorCurrencyInterface
         $rates = $this->getAllExchangeRates();
         $code  = $this->getCurrencyCode();
 
-        return $rates->rates[$code] ?? 1.00;
+        return $rates->rates[$code] ?? 0;
     }
 
     private function getAllExchangeRates(): ExchangeRates
