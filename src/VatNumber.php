@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Alpipego\Commerce;
 
 use Alpipego\Commerce\Exception\VatNumberException;
+use DragonBe\Vies\CheckVatResponse;
 use DragonBe\Vies\Vies;
 
 class VatNumber implements VatNumberInterface
