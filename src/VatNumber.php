@@ -9,27 +9,18 @@ declare(strict_types=1);
 
 namespace Alpipego\Commerce;
 
-use Alpipego\Commerce\Cache\RequestInterface;
 use Alpipego\Commerce\Exception\VatNumberException;
+use DragonBe\Vies\Vies;
 
 class VatNumber implements VatNumberInterface
 {
-    const VIES_API = 'http://ec.europa.eu/taxation_customs/vies/services/checkVatService';
-    const SOAP_ENVELOPE = '<s11:Envelope xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/">
-          <s11:Body>
-            <tns1:checkVat xmlns:tns1="urn:ec.europa.eu:taxud:vies:services:checkVat:types">
-              <tns1:countryCode>%s</tns1:countryCode>
-              <tns1:vatNumber>%s</tns1:vatNumber>
-            </tns1:checkVat>
-          </s11:Body>
-        </s11:Envelope>';
     private $location;
-    private $request;
+    private $vies;
 
-    public function __construct(LocateVisitorInterface $location, RequestInterface $request)
+    public function __construct(LocateVisitorInterface $location, Vies $vies)
     {
         $this->location = $location;
-        $this->request  = $request;
+        $this->vies     = $vies;
     }
 
     public function verify(string $vatNumber, string $country = ''): bool
@@ -38,7 +29,7 @@ class VatNumber implements VatNumberInterface
             $data   = $this->parse($vatNumber, (! empty($country) ? $country : $this->location->locate()));
             $result = $this->request($data['vat_number'], $data['country_code']);
 
-            return $result->valid;
+            return $result->isValid();
         } catch (VatNumberException $e) {
         }
 
@@ -55,37 +46,29 @@ class VatNumber implements VatNumberInterface
             $vatNumber = preg_replace('/^GR|EL/', '', $vatNumber);
         }
 
-        if (! array_key_exists($alpha2code, self::REGEXEN)) {
+        if ( ! array_key_exists($alpha2code, self::REGEXEN)) {
             throw new VatNumberException(sprintf('%s is not a VAT enabled country', $alpha2code));
         }
 
         preg_replace('/\h/', '', $vatNumber);
         $regex = sprintf('/^%s$/', self::REGEXEN[$alpha2code]);
-        if (! preg_match($regex, $vatNumber)) {
+        if ( ! preg_match($regex, $vatNumber)) {
             throw new VatNumberException(sprintf('%s is not a valid VAT ID number for %s', $vatNumber, $alpha2code));
         }
 
         return ['vat_number' => $vatNumber, 'country_code' => $alpha2code];
     }
 
-    private function request(string $vatNumber, string $alpha2code): Models\VatNumber
+    private function request(string $vatNumber, string $alpha2code): CheckVatResponse
     {
-        $keys = [
-            'countryCode',
-            'vatNumber',
-            'valid',
-            'name',
-            'address',
-        ];
-        $data = [
-            'http' => [
-                'method'  => 'POST',
-                'header'  => "Content-Type: text/xml; charset=utf-8; SOAPAction: checkVatService",
-                'content' => sprintf(self::SOAP_ENVELOPE, $alpha2code, $vatNumber),
-                'timeout' => 10,
-            ],
-        ];
+        if ( ! $this->vies->getHeartBeat()->isAlive()) {
+            throw new VatNumberException('Can\'t connect to VIES system.');
+        }
 
-        return $this->request->soap(self::VIES_API, $data, $keys, 'checkVatResponse', 'vatNumber');
+        try {
+            return $this->vies->validateVat($alpha2code, $vatNumber);
+        } catch (\Exception $e) {
+            throw new VatNumberException($e->getMessage());
+        }
     }
 }
