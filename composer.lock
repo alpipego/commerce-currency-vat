@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6aa9d0455f4117f4695cdf4ecd86084",
+    "content-hash": "26a92808cc44a9de7ead3b82d270e61d",
     "packages": [
         {
             "name": "dragonbe/vies",
@@ -115,7 +115,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "ext-soap": "*"
     },
     "platform-dev": []
 }

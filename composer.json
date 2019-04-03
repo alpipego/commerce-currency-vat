@@ -12,6 +12,7 @@
     "require": {
         "php": "^7.1",
         "netresearch/jsonmapper": "^1.3",
-        "dragonbe/vies": "^2.1"
+        "dragonbe/vies": "^2.1",
+        "ext-soap": "*"
     }
 }
