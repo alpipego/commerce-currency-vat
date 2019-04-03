@@ -32,43 +32,4 @@ final class Request implements RequestInterface
 
         return $this->cache->get($cacheKey);
     }
-
-    public function soap(
-        string $url,
-        array $data,
-        array $returnKeys,
-        string $responseType,
-        string $returnModel,
-        int $expire = 3600 * 24
-    ) {
-        $cacheKey = $this->cache->makeKey($url . implode(';', $this->flattenCacheKey($data)));
-        if ($this->cache->has($cacheKey)) {
-            return $this->cache->get($cacheKey);
-        }
-
-        $response = [];
-        $pattern  = '/<(%s).*?>([\s\S]*)<\/\1>/';
-        $result   = file_get_contents($url, false, stream_context_create($data));
-        if (preg_match(sprintf($pattern, $responseType), $result, $matches)) {
-            foreach ($returnKeys as $key) {
-                preg_match(sprintf($pattern, $key), $matches[2], $value);
-                $response[$key] = $value[2];
-            }
-            $this->cache->set($cacheKey, json_encode($response), $returnModel, $expire);
-
-            return $this->cache->get($cacheKey);
-        }
-
-        return $response;
-    }
-
-    private function flattenCacheKey(array $data): array
-    {
-        $return = [];
-        array_walk_recursive($data, function ($v, $k) use (&$return) {
-            $return[$k] = $v;
-        });
-
-        return $return;
-    }
 }
