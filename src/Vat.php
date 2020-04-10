@@ -31,7 +31,11 @@ final class Vat implements VatInterface
     {
         $this->request  = $request;
         $this->location = $location;
-        $this->country  = $location->locate();
+    }
+
+    public function run()
+    {
+        $this->country  = $this->location->locate();
     }
 
     public function getStandardRate(string $isoCode = ''): float
