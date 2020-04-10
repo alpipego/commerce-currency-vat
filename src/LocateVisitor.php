@@ -26,7 +26,7 @@ class LocateVisitor implements LocateVisitorInterface
 
     public function run()
     {
-        add_action('shutdown', [$this, 'locate']);
+        $this->locate();
     }
 
     public function locate(): string
